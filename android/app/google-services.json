@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "874007960488",
+    "project_id": "navod-taxt-app",
+    "storage_bucket": "navod-taxt-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874007960488:android:8b818be3bfbbf950c5db9d",
+        "android_client_info": {
+          "package_name": "com.taxiapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874007960488-fnao5he2p4s4jp4upglvu06r58jsafja.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.taxiapp",
+            "certificate_hash": "0b9f703de957ccc9633362e76557d2f3b2385c26"
+          }
+        },
+        {
+          "client_id": "874007960488-icn8c96mr08dlfck9vrk3ksb4asj2t7h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOn1LRdf0m9cRMjslG_UkZ8Kqnoa2H0-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874007960488-icn8c96mr08dlfck9vrk3ksb4asj2t7h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
