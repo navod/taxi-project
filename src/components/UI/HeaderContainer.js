@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import ComponentStyles, {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -10,7 +10,6 @@ import Ant from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setUserDetails, setUserId} from '../../store/slices/user';
 import {useDispatch, useSelector} from 'react-redux';
-import firestore from '@react-native-firebase/firestore';
 
 const HeaderContainer = () => {
   const navigation = useNavigation();

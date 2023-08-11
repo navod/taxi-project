@@ -1,50 +1,171 @@
-import React, {useState} from 'react';
-import {View, Text, TextInput, FlatList} from 'react-native';
+// [
+//   {
+//     city: 'Central Camp',
+//     description: 'Ghsjsbd',
+//     email: 'navod1@gmail.com',
+//     expreience: 'Kkv',
+//     images: [
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679569411089.jpg?alt=media&token=eb7a94b2-042f-48f7-bd2d-eaa5b866c1d0',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679569411120.jpg?alt=media&token=e2c8ad0a-3e3b-4630-9ee0-32b3d7239fc7',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679569411122.jpg?alt=media&token=d74e9858-257d-47ed-aa30-51c5fa6d260d',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679569411121.jpg?alt=media&token=37fb9776-e553-476b-bbb2-a7b55db17856',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679569411125.jpg?alt=media&token=bdfc37bc-04c7-47db-9304-3b1ccaa09c43',
+//     ],
+//     name: 'navod',
+//     phone_number: '0763933458',
+//     username: 'navod',
+//     vehicle_name: 'Abc',
+//     vehicle_register: '',
+//     vehicle_type: 'Car',
+//   },
+//   {
+//     city: 'Central Camp',
+//     description: 'sads adsdsd',
+//     email: 'navod1@gmail.com',
+//     expreience: 'adsdsdadsds',
+//     fuel_type: 'Any',
+//     gear_type: 'Any',
+//     images: [
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675269325574.jpg?alt=media&token=eace3f25-5e7a-446c-9b7b-f5e8614f1775',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675269325614.jpg?alt=media&token=fac4f39b-768d-461b-b1fc-bc74215ebfb4',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675269325619.jpg?alt=media&token=b6257a9c-3930-47f0-bb5f-62e15400e638',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675269325624.jpg?alt=media&token=cd3107a3-0797-4bad-a30d-98b5533df530',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675269325630.jpg?alt=media&token=05869f7a-6a2a-4c6a-b83d-d062053d8783',
+//     ],
+//     name: 'navod',
+//     phone_number: '0763933458',
+//     username: 'navod',
+//     vehicle_name: 'CHR',
+//     vehicle_register: 'Panadura',
+//     vehicle_type: 'Any',
+//     year: '2001',
+//   },
+//   {
+//     city: 'Central Camp',
+//     description: 'Description of vehicle ',
+//     district: 'Ampara',
+//     email: 'navod1@gmail.com',
+//     expreience: '5 years',
+//     images: [
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679905451378.jpg?alt=media&token=da5e8eb3-0950-429b-b5fd-24d50929f0fd',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679905451352.jpg?alt=media&token=e89b3bfb-be81-438c-8436-2b8094e3114a',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679905451379.jpg?alt=media&token=ac55d444-b992-40bb-befe-d7b508c7ebb7',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679905451380.jpg?alt=media&token=021938dd-59ed-40d8-bb76-a8d9cd410b36',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679905451381.jpg?alt=media&token=df0c00a6-b1ca-4d2f-a49f-287e85c3d61f',
+//     ],
+//     name: 'navod',
+//     phone_number: '0763933458',
+//     username: 'navod',
+//     vehicle_name: 'Jeep',
+//     vehicle_register: '',
+//     vehicle_type: 'Car',
+//   },
+//   {
+//     city: 'Central Camp',
+//     description: 'dsdsdd adsdsd',
+//     email: 'navod1@gmail.com',
+//     expreience: 'dsds',
+//     fuel_type: 'Any',
+//     gear_type: 'Any',
+//     images: [
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675486159683.jpg?alt=media&token=15365ebc-29d5-40fd-bb2f-bbd820f24132',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675486159833.jpg?alt=media&token=e70b0db7-ecca-474b-a274-fa4eea888ae9',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675486159836.jpg?alt=media&token=fd5dccf9-72d5-48ff-8151-13bfcfb64c7c',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675486159840.jpg?alt=media&token=0c16311b-a973-4f28-b46f-3310f6b76148',
+//       'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675486159845.jpg?alt=media&token=231e3f07-694a-4832-9014-21bd9de2cbad',
+//     ],
+//     name: 'navod',
+//     phone_number: '0763933458',
+//     username: 'navod',
+//     vehicle_name: 'CHR',
+//     vehicle_register: 'Panadura',
+//     vehicle_type: 'Any',
+//     year: '2001',
+//   },
+// ];
 
-const data = [
-  {id: '1', name: 'John Doe', city: 'San Francisco'},
-  {id: '2', name: 'Jane Doe', city: 'New York'},
-  {id: '3', name: 'Jim Smith', city: 'Los Angeles'},
-  // Add more objects to the array as needed
+[
+  {
+    city: 'Central Camp',
+    description: 'Ghsjsbd',
+    email: 'navod1@gmail.com',
+    expreience: 'Kkv',
+    images: [
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679569411089.jpg?alt=media&token=eb7a94b2-042f-48f7-bd2d-eaa5b866c1d0',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679569411120.jpg?alt=media&token=e2c8ad0a-3e3b-4630-9ee0-32b3d7239fc7',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679569411122.jpg?alt=media&token=d74e9858-257d-47ed-aa30-51c5fa6d260d',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679569411121.jpg?alt=media&token=37fb9776-e553-476b-bbb2-a7b55db17856',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679569411125.jpg?alt=media&token=bdfc37bc-04c7-47db-9304-3b1ccaa09c43',
+    ],
+    name: 'navod',
+    phone_number: '0763933458',
+    username: 'navod',
+    vehicle_name: 'Abc',
+    vehicle_register: '',
+    vehicle_type: 'Car',
+  },
+  {
+    city: 'Central Camp',
+    description: 'sads adsdsd',
+    email: 'navod1@gmail.com',
+    expreience: 'adsdsdadsds',
+    fuel_type: 'Any',
+    gear_type: 'Any',
+    images: [
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675269325574.jpg?alt=media&token=eace3f25-5e7a-446c-9b7b-f5e8614f1775',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675269325614.jpg?alt=media&token=fac4f39b-768d-461b-b1fc-bc74215ebfb4',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675269325619.jpg?alt=media&token=b6257a9c-3930-47f0-bb5f-62e15400e638',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675269325624.jpg?alt=media&token=cd3107a3-0797-4bad-a30d-98b5533df530',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675269325630.jpg?alt=media&token=05869f7a-6a2a-4c6a-b83d-d062053d8783',
+    ],
+    name: 'navod',
+    phone_number: '0763933458',
+    username: 'navod',
+    vehicle_name: 'CHR',
+    vehicle_register: 'Panadura',
+    vehicle_type: 'Any',
+    year: '2001',
+  },
+  {
+    city: 'Central Camp',
+    description: 'Description of vehicle ',
+    district: 'Ampara',
+    email: 'navod1@gmail.com',
+    expreience: '5 years',
+    images: [
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679905451378.jpg?alt=media&token=da5e8eb3-0950-429b-b5fd-24d50929f0fd',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679905451352.jpg?alt=media&token=e89b3bfb-be81-438c-8436-2b8094e3114a',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679905451379.jpg?alt=media&token=ac55d444-b992-40bb-befe-d7b508c7ebb7',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679905451380.jpg?alt=media&token=021938dd-59ed-40d8-bb76-a8d9cd410b36',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1679905451381.jpg?alt=media&token=df0c00a6-b1ca-4d2f-a49f-287e85c3d61f',
+    ],
+    name: 'navod',
+    phone_number: '0763933458',
+    username: 'navod',
+    vehicle_name: 'Jeep',
+    vehicle_register: '',
+    vehicle_type: 'Car',
+  },
+  {
+    city: 'Central Camp',
+    description: 'dsdsdd adsdsd',
+    email: 'navod1@gmail.com',
+    expreience: 'dsds',
+    fuel_type: 'Any',
+    gear_type: 'Any',
+    images: [
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675486159683.jpg?alt=media&token=15365ebc-29d5-40fd-bb2f-bbd820f24132',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675486159833.jpg?alt=media&token=e70b0db7-ecca-474b-a274-fa4eea888ae9',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675486159836.jpg?alt=media&token=fd5dccf9-72d5-48ff-8151-13bfcfb64c7c',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675486159840.jpg?alt=media&token=0c16311b-a973-4f28-b46f-3310f6b76148',
+      'https://firebasestorage.googleapis.com/v0/b/navod-taxt-app.appspot.com/o/ObeNayIJgldL3F1C5Jm3uGU4dff1%2Fvehicles%2F1675486159845.jpg?alt=media&token=231e3f07-694a-4832-9014-21bd9de2cbad',
+    ],
+    name: 'navod',
+    phone_number: '0763933458',
+    username: 'navod',
+    vehicle_name: 'CHR',
+    vehicle_register: 'Panadura',
+    vehicle_type: 'Any',
+    year: '2001',
+  },
 ];
-
-const SearchScreen = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState(data);
-
-  const handleSearch = text => {
-    setSearchTerm(text);
-
-    const filtered = data.filter(item => {
-      return (
-        item.id.includes(text) ||
-        item.name.toLowerCase().includes(text.toLowerCase()) ||
-        item.city.toLowerCase().includes(text.toLowerCase())
-      );
-    });
-
-    setFilteredData(filtered);
-  };
-
-  return (
-    <View>
-      <TextInput
-        placeholder="Search"
-        onChangeText={handleSearch}
-        value={searchTerm}
-      />
-      <FlatList
-        data={filteredData}
-        keyExtractor={item => item.id}
-        renderItem={({item}) => (
-          <View>
-            <Text>{item.name}</Text>
-            <Text>{item.city}</Text>
-          </View>
-        )}
-      />
-    </View>
-  );
-};
-
-export default SearchScreen;

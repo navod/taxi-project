@@ -9,25 +9,26 @@ import {CITES2} from '../../../constants/cities2';
 import Ant from 'react-native-vector-icons/AntDesign';
 import IO from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
-import {setLocation, setPickupLocation} from '../../../store/slices/user';
+import {
+  setDestination,
+  setLocation,
+  setPickupLocation,
+} from '../../../store/slices/user';
 import {useDispatch, useSelector} from 'react-redux';
+import {DISTRICS} from '../../../constants/districts';
 
 const SearchCity = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState(CITES2);
+  const [filteredData, setFilteredData] = useState(DISTRICS);
 
   const handleSearch = text => {
     setSearchTerm(text);
 
-    const filtered = CITES2.filter(item => {
-      return item?.toLowerCase()?.includes(text);
+    const filtered = DISTRICS.filter(item => {
+      return item?.toLowerCase()?.includes(text.toLowerCase());
     });
 
     setFilteredData(filtered);
-  };
-
-  const containsNumber = str => {
-    return /[$]/.test(str);
   };
 
   const navigation = useNavigation();
@@ -36,27 +37,24 @@ const SearchCity = () => {
 
   const onSelectHandler = value => {
     dispatch(setPickupLocation(value));
+    dispatch(setDestination(''));
     navigation.goBack();
   };
 
   const renderItem = ({item, index}) => (
     <View style={styles.item}>
-      {containsNumber(item) ? (
-        <Text style={styles.district}>{item.substring(1)}</Text>
-      ) : (
-        <View key={index}>
-          <TouchableOpacity
-            style={styles.subBtn}
-            onPress={() => onSelectHandler(item)}>
-            <IO
-              name="location-sharp"
-              size={20}
-              color={ComponentStyles.COLORS.YELLOW_DARAK}
-            />
-            <Text style={styles.subTxt}>{item}</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      <View key={index}>
+        <TouchableOpacity
+          style={styles.subBtn}
+          onPress={() => onSelectHandler(item)}>
+          <IO
+            name="location-sharp"
+            size={20}
+            color={ComponentStyles.COLORS.YELLOW_DARAK}
+          />
+          <Text style={styles.subTxt}>{item}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
   return (

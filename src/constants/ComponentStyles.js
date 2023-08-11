@@ -26,7 +26,7 @@ export default {
 
     YELLOW_DARAK: '#FFB100',
     YELLOW_LIGHT: '#FBC252',
-    LIGHT_GREEN: '#A3BB98',
+    LIGHT_GREEN: '#7851a9',
     DARK_GREY: '#434242',
     LIGHT_YELLOW_2: '#F0ECCF',
   },

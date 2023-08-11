@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet, FlatList} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import HeaderContainer from '../../UI/HeaderContainer';
 import Input from '../../UI/Input';
 import ComponentStyles, {
@@ -9,59 +9,57 @@ import {CITES2} from '../../../constants/cities2';
 import Ant from 'react-native-vector-icons/AntDesign';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import IO from 'react-native-vector-icons/Ionicons';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {setDestination, setLocation} from '../../../store/slices/user';
 import {useDispatch, useSelector} from 'react-redux';
+import {CITES} from '../../../constants/cities';
 
 const SearchCity2 = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState(CITES2);
+  const [filteredData, setFilteredData] = useState([]);
+  const [cities, setCities] = useState([]);
 
   const handleSearch = text => {
     setSearchTerm(text);
 
-    const filtered = CITES2.filter(item => {
-      return item?.toLowerCase()?.includes(text);
+    const filtered = cities.filter(item => {
+      return item?.toLowerCase()?.includes(text.toLowerCase());
     });
 
     setFilteredData(filtered);
-  };
-
-  const containsNumber = str => {
-    return /[$]/.test(str);
   };
 
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
 
-  const {destination} = useSelector(state => state.user);
+  const {destination, pickupLocation} = useSelector(state => state.user);
 
   const onSelectHandler = value => {
     dispatch(setDestination(value));
     navigation.goBack();
   };
 
-  console.log(destination);
+  useEffect(() => {
+    const city = CITES.filter(data => data.district === pickupLocation);
+    setFilteredData(city[0].cities);
+    setCities(city[0].cities);
+  }, []);
 
   const renderItem = ({item, index}) => (
     <View style={styles.item}>
-      {containsNumber(item) ? (
-        <Text style={styles.district}>{item.substring(1)}</Text>
-      ) : (
-        <View key={index}>
-          <TouchableOpacity
-            style={styles.subBtn}
-            onPress={() => onSelectHandler(item)}>
-            <IO
-              name="location-sharp"
-              size={20}
-              color={ComponentStyles.COLORS.YELLOW_DARAK}
-            />
-            <Text style={styles.subTxt}>{item}</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      <View key={index}>
+        <TouchableOpacity
+          style={styles.subBtn}
+          onPress={() => onSelectHandler(item)}>
+          <IO
+            name="location-sharp"
+            size={20}
+            color={ComponentStyles.COLORS.YELLOW_DARAK}
+          />
+          <Text style={styles.subTxt}>{item}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
   return (
@@ -75,6 +73,7 @@ const SearchCity2 = () => {
           value={searchTerm}
           icon={<Ant name="search1" style={styles.icon} size={15} />}
         />
+        <Text style={styles.district}>{pickupLocation}</Text>
         <FlatList
           data={filteredData}
           keyExtractor={(item, index) => index}

@@ -38,10 +38,10 @@ const Vehicle = () => {
         return (
           // item?.vehicle_register?.toLowerCase()?.includes(text) ||
           item?.vehicle_type?.toLowerCase()?.includes(text) ||
-          item?.vehicle_name?.toLowerCase()?.includes(text) ||
-          item?.year?.toLowerCase()?.includes(text) ||
-          item?.fuel_type?.toLowerCase()?.includes(text) ||
-          item?.gear_type?.toLowerCase()?.includes(text)
+          item?.vehicle_name?.toLowerCase()?.includes(text)
+          // item?.year?.toLowerCase()?.includes(text)
+          // item?.fuel_type?.toLowerCase()?.includes(text) ||
+          // item?.gear_type?.toLowerCase()?.includes(text)
         );
       });
       setFilteredData(filtered);

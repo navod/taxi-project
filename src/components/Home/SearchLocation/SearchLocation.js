@@ -25,7 +25,7 @@ import firestore from '@react-native-firebase/firestore';
 const SearchLocation = () => {
   const navigation = useNavigation();
 
-  const {pickupLocation, destination} = useSelector(state => state.user);
+  const {pickupLocation, destination, posts} = useSelector(state => state.user);
 
   const [loading, setLoading] = useState(false);
 
@@ -36,10 +36,10 @@ const SearchLocation = () => {
       toast('Select locations', ALERT_TYPE.WARNING);
       return false;
     } else if (pickupLocation === '') {
-      toast('Select pickup location', ALERT_TYPE.WARNING);
+      toast('Select District', ALERT_TYPE.WARNING);
       return false;
     } else if (destination === '') {
-      toast('Select destination', ALERT_TYPE.WARNING);
+      toast('Select City', ALERT_TYPE.WARNING);
       return false;
     } else {
       return true;
@@ -50,17 +50,35 @@ const SearchLocation = () => {
     setLoading(true);
     firestore()
       .collection('Posts')
-      .where('vehicle_register', '==', pickupLocation)
+      .where('vehicleCity', '==', destination)
       .onSnapshot(documentSnapshot2 => {
         const list = [];
         documentSnapshot2.forEach(doc => {
           if (doc.exists) {
-            console.log(doc.data());
             list.push(doc.data());
           }
         });
 
         dispatch(setPosts(list));
+        navigation.navigate('Vehicle');
+        setLoading(false);
+      });
+    setLoading(true);
+    firestore()
+      .collection('Posts')
+      .where('district', '==', pickupLocation)
+      .onSnapshot(documentSnapshot2 => {
+        const data = [];
+        documentSnapshot2.forEach(doc => {
+          if (doc.exists) {
+            data.push(doc.data());
+          }
+        });
+
+        if (data.length > 0) {
+          const updatedValues = [...posts, ...data];
+          dispatch(setPosts(updatedValues));
+        }
         navigation.navigate('Vehicle');
         setLoading(false);
       });
@@ -90,9 +108,7 @@ const SearchLocation = () => {
             style={styles.textInput}
             onPress={() => navigation.navigate('SearchCity1')}>
             <Text style={styles.inputTxt}>
-              {pickupLocation !== ''
-                ? pickupLocation
-                : 'Select Pickup Location'}
+              {pickupLocation !== '' ? pickupLocation : 'Select District'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -106,9 +122,15 @@ const SearchLocation = () => {
           />
           <TouchableOpacity
             style={styles.textInput}
-            onPress={() => navigation.navigate('SearchCity2')}>
+            onPress={() => {
+              if (pickupLocation === '') {
+                toast('Select District', ALERT_TYPE.WARNING);
+              } else {
+                navigation.navigate('SearchCity2');
+              }
+            }}>
             <Text style={styles.inputTxt}>
-              {destination !== '' ? destination : 'Select Destination'}
+              {destination !== '' ? destination : 'Select City'}
             </Text>
           </TouchableOpacity>
         </View>

@@ -11,6 +11,7 @@ import List from '../../../Test';
 import SearchLocation from '../../components/Home/SearchLocation/SearchLocation';
 import SearchCity1 from '../../components/Home/SearchLocation/SearchCity1';
 import SearchCity2 from '../../components/Home/SearchLocation/SearchCity2';
+import DistrictModal from '../../components/UI/DistrictModal';
 
 const AuthStack = createStackNavigator();
 const AuthStackScreen = () => {
@@ -29,6 +30,7 @@ const AuthStackScreen = () => {
         component={VehicleRegistration}
       />
       <AuthStack.Screen name="CityModal" component={CityModal} />
+      <AuthStack.Screen name="DistrictModal" component={DistrictModal} />
     </AuthStack.Navigator>
   );
 };

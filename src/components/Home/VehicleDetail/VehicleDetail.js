@@ -49,14 +49,20 @@ const VehicleDetail = () => {
           <Text style={styles.mainLabel}>Experience</Text>
           <Text style={styles.mainSubTxt}>{post.expreience}</Text>
 
-          <Text style={styles.mainLabel}>Fuel Type</Text>
+          {/* <Text style={styles.mainLabel}>Fuel Type</Text>
           <Text style={styles.mainSubTxt}>{post.fuel_type}</Text>
 
           <Text style={styles.mainLabel}>Gear Type</Text>
-          <Text style={styles.mainSubTxt}>{post.gear_type}</Text>
+          <Text style={styles.mainSubTxt}>{post.gear_type}</Text> */}
 
+          <Text style={styles.mainLabel}>District</Text>
+          <Text style={styles.mainSubTxt}>
+            {post.district ? post.district : 'N/A'}
+          </Text>
           <Text style={styles.mainLabel}>City</Text>
-          <Text style={styles.mainSubTxt}>{post.city ? post.city : 'N/A'}</Text>
+          <Text style={styles.mainSubTxt}>
+            {post.vehicleCity ? post.vehicleCity : 'N/A'}
+          </Text>
         </View>
 
         <View style={styles.driverSection}>

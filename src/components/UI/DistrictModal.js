@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import ComponentStyles, {
   widthPercentageToDP as wp,
 } from '../../constants/ComponentStyles';
@@ -12,12 +12,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setCategoryTypes} from '../../store/slices/user';
 import Input from './Input';
 import Ant from 'react-native-vector-icons/AntDesign';
-import {CITES} from '../../constants/cities';
+import {DISTRICS} from '../../constants/districts';
 
-const CityModal = () => {
+const DistrictModal = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState([]);
-  const [cities, setCities] = useState([]);
+  const [filteredData, setFilteredData] = useState(DISTRICS);
 
   const navigation = useNavigation();
 
@@ -26,7 +25,7 @@ const CityModal = () => {
   const {categoryTypes} = useSelector(state => state.user);
 
   const onSelectHandler = value => {
-    dispatch(setCategoryTypes({...categoryTypes, city: value}));
+    dispatch(setCategoryTypes({...categoryTypes, district: value, city: ''}));
     // onSelect(value);
     navigation.goBack();
   };
@@ -38,37 +37,27 @@ const CityModal = () => {
   const handleSearch = text => {
     setSearchTerm(text);
 
-    const filtered = cities.filter(item => {
+    const filtered = DISTRICS.filter(item => {
       return item?.toLowerCase()?.includes(text.toLowerCase());
     });
 
     setFilteredData(filtered);
   };
 
-  useEffect(() => {
-    const city = CITES.filter(data => data.district === categoryTypes.district);
-    setFilteredData(city[0].cities);
-    setCities(city[0].cities);
-  }, []);
-
   const renderItem = ({item, index}) => (
     <View style={styles.item}>
-      {containsNumber(item) ? (
-        <Text style={styles.headerTxt}>{item.substring(1)}</Text>
-      ) : (
-        <View key={index}>
-          <TouchableOpacity
-            style={styles.subBtn}
-            onPress={() => onSelectHandler(item)}>
-            <IO
-              name="location-sharp"
-              size={20}
-              color={ComponentStyles.COLORS.YELLOW_DARAK}
-            />
-            <Text style={styles.subTxt}>{item}</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      <View key={index}>
+        <TouchableOpacity
+          style={styles.subBtn}
+          onPress={() => onSelectHandler(item)}>
+          <IO
+            name="location-sharp"
+            size={20}
+            color={ComponentStyles.COLORS.YELLOW_DARAK}
+          />
+          <Text style={styles.subTxt}>{item}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
@@ -99,7 +88,7 @@ const CityModal = () => {
   );
 };
 
-export default CityModal;
+export default DistrictModal;
 
 const styles = StyleSheet.create({
   mainConatiner: {

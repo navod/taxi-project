@@ -31,7 +31,7 @@ const VehicleListItem = ({data}) => {
             <Text style={styles.title}>{data.vehicle_name}</Text>
             <View style={styles.subColumn2}>
               <Text style={styles.subTxt}>{data.city}</Text>
-              <Text style={styles.price}>Model</Text>
+              {/* <Text style={styles.price}>Model</Text> */}
               {/* <Text style={styles.subTxt}>2020-10-12</Text> */}
             </View>
           </View>

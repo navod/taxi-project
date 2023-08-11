@@ -56,7 +56,6 @@ const VehicleRegistration = () => {
 
   const [vehicleName, setVehicleName] = useState('');
   const [fuelType, setFuelType] = useState('Any');
-  const [city, setCity] = useState('');
   const [gearType, setGearType] = useState('Any');
   const [vehicleType, setVehicleType] = useState('Any');
   const [year, setYear] = useState('');
@@ -69,7 +68,6 @@ const VehicleRegistration = () => {
   const onClear = () => {
     setVehicleName('');
     setFuelType('Any');
-    setCity('');
     setGearType('Any');
     setVehicleType('Any');
     setYear('');
@@ -77,7 +75,7 @@ const VehicleRegistration = () => {
     setDescription('');
     setImages([]);
     setImgArray([]);
-    dispatch(setCategoryTypes({...categoryTypes, city: ''}));
+    dispatch(setCategoryTypes({...categoryTypes, city: '', district: ''}));
   };
 
   const onHandleModal = modal => {
@@ -122,15 +120,16 @@ const VehicleRegistration = () => {
   const saveToDB = () => {
     const obj = {
       vehicle_name: vehicleName,
-      fuel_type: fuelType,
-      vehicle_register: city,
-      gear_type: gearType,
+      // fuel_type: fuelType,
+      vehicleCity: categoryTypes.city,
+      // gear_type: gearType,
       vehicle_type: vehicleType,
-      year: year,
       expreience: expreience,
       description: description,
       images: imgArray,
+      district: categoryTypes.district,
     };
+
     firestore()
       .collection('Posts')
       .add({...obj, ...userDetails})
@@ -148,8 +147,8 @@ const VehicleRegistration = () => {
   const isValid = () => {
     if (
       vehicleName === '' &&
-      city === '' &&
-      year === '' &&
+      categoryTypes.district === '' &&
+      categoryTypes.city === '' &&
       expreience === '' &&
       description === ''
     ) {
@@ -157,9 +156,6 @@ const VehicleRegistration = () => {
       return false;
     } else if (vehicleName === '') {
       toast(REGISTER_VEHICLE_ERROR_MSG.VEHICLE_NAME_EMPTY, ALERT_TYPE.WARNING);
-      return false;
-    } else if (year === '') {
-      toast(REGISTER_VEHICLE_ERROR_MSG.YEAR_EMPTY, ALERT_TYPE.WARNING);
       return false;
     } else if (expreience === '') {
       toast(REGISTER_VEHICLE_ERROR_MSG.EXPERIENCE_EMPTY, ALERT_TYPE.WARNING);
@@ -169,8 +165,13 @@ const VehicleRegistration = () => {
       return false;
     } else if (images.length < 5) {
       toast(REGISTER_VEHICLE_ERROR_MSG.IMAGE_VALIDATION, ALERT_TYPE.WARNING);
-    } else if (categoryTypes.city.length === '') {
+      return false;
+    } else if (categoryTypes.district === '') {
+      toast('District Cannot be empty', ALERT_TYPE.WARNING);
+      return false;
+    } else if (categoryTypes.city === '') {
       toast(REGISTER_VEHICLE_ERROR_MSG.CITY_EMPTY, ALERT_TYPE.WARNING);
+      return false;
     } else {
       return true;
     }
@@ -285,7 +286,7 @@ const VehicleRegistration = () => {
               onChangeText={setVehicleName}
             />
           </View>
-          <View style={styles.inputContainer}>
+          {/* <View style={styles.inputContainer}>
             <Text style={styles.labelTxt}>Fuel Type</Text>
 
             <DropDown
@@ -293,18 +294,35 @@ const VehicleRegistration = () => {
               value={fuelType}
               placeholder="Any"
             />
+          </View> */}
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.labelTxt}>District</Text>
+
+            <DropDown
+              onPress={() => navigation.navigate('DistrictModal')}
+              //   value={city}
+              placeholder="Eg: Kaluthara"
+              value={categoryTypes.district}
+            />
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.labelTxt}>City</Text>
 
             <DropDown
-              onPress={() => navigation.navigate('CityModal')}
+              onPress={() => {
+                if (categoryTypes.district === '') {
+                  toast('Select District', ALERT_TYPE.WARNING);
+                } else {
+                  navigation.navigate('CityModal');
+                }
+              }}
               //   value={city}
               placeholder="Eg: Panadura"
               value={categoryTypes.city}
             />
           </View>
-          <View style={styles.inputContainer}>
+          {/* <View style={styles.inputContainer}>
             <Text style={styles.labelTxt}>Gear Type</Text>
 
             <DropDown
@@ -312,7 +330,7 @@ const VehicleRegistration = () => {
               value={gearType}
               placeholder="Any"
             />
-          </View>
+          </View> */}
           <View style={styles.inputContainer}>
             <Text style={styles.labelTxt}>Vehicle Type</Text>
 
@@ -322,7 +340,7 @@ const VehicleRegistration = () => {
               placeholder="Any"
             />
           </View>
-          <View style={styles.inputContainer}>
+          {/* <View style={styles.inputContainer}>
             <Text style={styles.labelTxt}>Year</Text>
 
             <Input
@@ -331,7 +349,7 @@ const VehicleRegistration = () => {
               value={year}
               onChangeText={setYear}
             />
-          </View>
+          </View> */}
           <View style={styles.inputContainer}>
             <Text style={styles.labelTxt}>Driving Experience</Text>
 
@@ -341,6 +359,7 @@ const VehicleRegistration = () => {
               style={styles.input}
               value={expreience}
               onChangeText={setExperience}
+              placeholderTextColor="grey"
             />
           </View>
           <View style={styles.inputContainer}>
@@ -352,6 +371,7 @@ const VehicleRegistration = () => {
               style={styles.input}
               value={description}
               onChangeText={setDescription}
+              placeholderTextColor="grey"
             />
           </View>
           <View style={styles.imageContainer}>

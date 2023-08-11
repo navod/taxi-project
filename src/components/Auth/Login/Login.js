@@ -34,8 +34,8 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState('navod1@gmail.com');
-  const [password, setPassword] = useState('12345678');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const [loading, setLoading] = useState('');
 
